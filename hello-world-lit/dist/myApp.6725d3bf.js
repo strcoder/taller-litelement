@@ -4263,12 +4263,86 @@ var HelloWorld = /*#__PURE__*/function (_LitElement) {
 }(_litElement.LitElement);
 
 customElements.define('hello-world', HelloWorld);
-},{"lit-element":"node_modules/lit-element/lit-element.js","./myMessage":"src/myMessage.js"}],"src/myApp.js":[function(require,module,exports) {
+},{"lit-element":"node_modules/lit-element/lit-element.js","./myMessage":"src/myMessage.js"}],"src/myList.js":[function(require,module,exports) {
+"use strict";
+
+var _litElement = require("lit-element");
+
+var _templateObject, _templateObject2;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var MyList = /*#__PURE__*/function (_LitElement) {
+  _inherits(MyList, _LitElement);
+
+  var _super = _createSuper(MyList);
+
+  function MyList() {
+    _classCallCheck(this, MyList);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(MyList, [{
+    key: "_getItem",
+    value: function _getItem(item) {
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <li>", "(", ")</li>\n    "])), item === null || item === void 0 ? void 0 : item.name, item === null || item === void 0 ? void 0 : item.year);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$items;
+
+      return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      <h1>\n        ", "\n      </h1>\n      <ul>\n        ", "\n      </ul>\n    "])), this.title, (_this$items = this.items) === null || _this$items === void 0 ? void 0 : _this$items.map(this._getItem));
+    }
+  }], [{
+    key: "properties",
+    get: function get() {
+      return {
+        title: {
+          type: String
+        },
+        items: {
+          type: Array
+        }
+      };
+    }
+  }]);
+
+  return MyList;
+}(_litElement.LitElement);
+
+customElements.define('my-list', MyList);
+},{"lit-element":"node_modules/lit-element/lit-element.js"}],"src/myApp.js":[function(require,module,exports) {
 "use strict";
 
 var _litElement = require("lit-element");
 
 require("./helloWorld.js");
+
+require("./myList");
 
 var _templateObject;
 
@@ -4302,15 +4376,44 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
   var _super = _createSuper(MyApp);
 
   function MyApp() {
+    var _this;
+
     _classCallCheck(this, MyApp);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this);
+    _this.items = [{
+      id: 1,
+      name: 'The Dark Knight',
+      year: 2008
+    }, {
+      id: 2,
+      name: 'Inception',
+      year: 2010
+    }, {
+      id: 3,
+      name: 'Matrix',
+      year: 1999
+    }, {
+      id: 4,
+      name: 'Fight Club',
+      year: 1999
+    }];
+    return _this;
   }
 
   _createClass(MyApp, [{
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <hello-world messageOutside=\"Outside\"></hello-world>\n    "])));
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <hello-world messageOutside=\"Outside\"></hello-world>\n      <my-list title=\"My favorites movies\" items=", "></my-list>\n    "])), JSON.stringify(this.items));
+    }
+  }], [{
+    key: "properties",
+    get: function get() {
+      return {
+        items: {
+          type: Array
+        }
+      };
     }
   }]);
 
@@ -4318,7 +4421,7 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
 }(_litElement.LitElement);
 
 customElements.define('my-app', MyApp);
-},{"lit-element":"node_modules/lit-element/lit-element.js","./helloWorld.js":"src/helloWorld.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"lit-element":"node_modules/lit-element/lit-element.js","./helloWorld.js":"src/helloWorld.js","./myList":"src/myList.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -4346,7 +4449,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38417" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46591" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
