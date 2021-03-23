@@ -4,7 +4,7 @@ import './helloWorld.js';
 class MyApp extends LitElement {
   render() {
     return html`
-      <hello-world></hello-world>
+      <hello-world messageOutside="Outside"></hello-world>
     `;
   }
 }
