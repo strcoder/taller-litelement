@@ -5,8 +5,6 @@ class MyApp extends LitElement {
   static get properties() {
     return {
       list: { type: Array },
-      error: { type: Boolean },
-      loading: { type: Boolean },
     }
   }
 
@@ -31,8 +29,6 @@ class MyApp extends LitElement {
   constructor() {
     super();
     this.list = [];
-    this.error = false;
-    this.boolean = false;
   }
 
   _mandarLista() {

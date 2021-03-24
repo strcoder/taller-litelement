@@ -4274,8 +4274,6 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
 
     _this = _super.call(this);
     _this.list = [];
-    _this.error = false;
-    _this.boolean = false;
     return _this;
   }
 
@@ -4284,8 +4282,8 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
     value: function _mandarLista() {
       var _this2 = this;
 
-      var node = this.shadowRoot.querySelector('my-list');
       var url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=4ff32b3a95fabacb861ecfa8aa1dfcba&language=en-US&page=1';
+      var node = this.shadowRoot.querySelector('my-list');
       node.removeAttribute('error');
       node.setAttribute('loading', true);
       fetch(url).then(function (data) {
@@ -4315,12 +4313,6 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
       return {
         list: {
           type: Array
-        },
-        error: {
-          type: Boolean
-        },
-        loading: {
-          type: Boolean
         }
       };
     }
@@ -4363,7 +4355,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35041" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40361" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
