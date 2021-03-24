@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 
 class MyList extends LitElement {
   static get properties() {
@@ -6,6 +6,29 @@ class MyList extends LitElement {
       title: { type: String },
       items: { type: Array },
     }
+  }
+
+  static get styles() {
+    return css`
+      li {
+        color: teal;
+        padding: 10px 0;
+        font-size: large;
+        font-weight: bold;
+      }
+
+      .text-info {
+        color: #EC7D15;
+        font-size: large;
+        font-weight: bold;
+      }
+    `
+  }
+
+  constructor() {
+    super();
+    this.title = '';
+    this.items = [];
   }
 
   _getItem(item) {
@@ -21,7 +44,7 @@ class MyList extends LitElement {
       </h1>
       <ul>
         ${(!this.items || this.items?.length === 0) ?
-          'No hay datos' :
+          html`<p class="text-info">No hay datos</p>` :
           this.items?.map(this._getItem)
         }
       </ul>

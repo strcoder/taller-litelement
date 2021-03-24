@@ -4138,7 +4138,7 @@ LitElement.render = _shadyRender.render;
 
 var _litElement = require("lit-element");
 
-var _templateObject, _templateObject2;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4170,9 +4170,14 @@ var MyList = /*#__PURE__*/function (_LitElement) {
   var _super = _createSuper(MyList);
 
   function MyList() {
+    var _this;
+
     _classCallCheck(this, MyList);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this);
+    _this.title = '';
+    _this.items = [];
+    return _this;
   }
 
   _createClass(MyList, [{
@@ -4183,9 +4188,9 @@ var MyList = /*#__PURE__*/function (_LitElement) {
   }, {
     key: "render",
     value: function render() {
-      var _this$items;
+      var _this$items, _this$items2;
 
-      return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      <h1>\n        ", "\n      </h1>\n      <ul>\n        ", "\n      </ul>\n    "])), this.title, !this.items || this.items.length === 0 ? 'No hay datos' : (_this$items = this.items) === null || _this$items === void 0 ? void 0 : _this$items.map(this._getItem));
+      return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      <h1>\n        ", "\n      </h1>\n      <ul>\n        ", "\n      </ul>\n    "])), this.title, !this.items || ((_this$items = this.items) === null || _this$items === void 0 ? void 0 : _this$items.length) === 0 ? (0, _litElement.html)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["<p class=\"text-info\">No hay datos</p>"]))) : (_this$items2 = this.items) === null || _this$items2 === void 0 ? void 0 : _this$items2.map(this._getItem));
     }
   }], [{
     key: "properties",
@@ -4198,6 +4203,11 @@ var MyList = /*#__PURE__*/function (_LitElement) {
           type: Array
         }
       };
+    }
+  }, {
+    key: "styles",
+    get: function get() {
+      return (0, _litElement.css)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n      li {\n        color: teal;\n        padding: 10px 0;\n        font-size: large;\n        font-weight: bold;\n      }\n\n      .text-info {\n        color: #EC7D15;\n        font-size: large;\n        font-weight: bold;\n      }\n    "])));
     }
   }]);
 
@@ -4212,7 +4222,7 @@ var _litElement = require("lit-element");
 
 require("./myList");
 
-var _templateObject;
+var _templateObject, _templateObject2;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4292,6 +4302,12 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
           type: Array
         }
       };
+    } // border-radius: 0
+
+  }, {
+    key: "styles",
+    get: function get() {
+      return (0, _litElement.css)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      :host {\n        font-family: 'Roboto', sans-serif;\n      }\n\n      button {\n        margin: 0 10px;\n        color: #111111;\n        background: none;\n        font-size: large;\n        font-weight: bold;\n        padding: 6px 12px;\n        border: 3px solid #111111;\n      }\n    "])));
     }
   }]);
 
@@ -4327,7 +4343,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39891" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42983" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

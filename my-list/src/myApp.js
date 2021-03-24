@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import './myList';
 
 class MyApp extends LitElement {
@@ -6,6 +6,25 @@ class MyApp extends LitElement {
     return {
       list: { type: Array },
     }
+  }
+
+  // border-radius: 0
+  static get styles() {
+    return css`
+      :host {
+        font-family: 'Roboto', sans-serif;
+      }
+
+      button {
+        margin: 0 10px;
+        color: #111111;
+        background: none;
+        font-size: large;
+        font-weight: bold;
+        padding: 6px 12px;
+        border: 3px solid #111111;
+      }
+    `;
   }
 
   constructor() {
