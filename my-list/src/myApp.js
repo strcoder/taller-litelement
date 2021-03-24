@@ -5,10 +5,11 @@ class MyApp extends LitElement {
   static get properties() {
     return {
       list: { type: Array },
+      error: { type: Boolean },
+      loading: { type: Boolean },
     }
   }
 
-  // border-radius: 0
   static get styles() {
     return css`
       :host {
@@ -30,15 +31,24 @@ class MyApp extends LitElement {
   constructor() {
     super();
     this.list = [];
+    this.error = false;
+    this.boolean = false;
   }
 
   _mandarLista() {
-    this.list = [
-      { id: 1, name: 'The Dark Knight', year: 2008 },
-      { id: 2, name: 'Inception', year: 2010 },
-      { id: 3, name: 'Matrix', year: 1999 },
-      { id: 4, name: 'Fight Club', year: 1999 },
-    ];
+    const url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=4ff32b3a95fabacb861ecfa8aa1dfcba&language=en-US&page=1';
+    const node = this.shadowRoot.querySelector('my-list');
+    node.removeAttribute('error');
+    node.setAttribute('loading', true);
+    fetch(url)
+    .then((data) => data.json())
+    .then(({ results }) => {
+      this.list = results;
+      node.removeAttribute('loading');
+      node.removeAttribute('error');
+    }).catch((error) => {
+      node.setAttribute('error', true);
+    });
   }
 
   _limiarLista() {
@@ -55,7 +65,10 @@ class MyApp extends LitElement {
           Empty list
         </button>
 
-        <my-list title="My favorites movies" items=${JSON.stringify(this.list)}></my-list>
+        <my-list
+          title="My favorites movies"
+          items=${JSON.stringify(this.list)}
+        ></my-list>
       </div>
     `;
   }

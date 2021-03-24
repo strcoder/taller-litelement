@@ -4138,7 +4138,7 @@ LitElement.render = _shadyRender.render;
 
 var _litElement = require("lit-element");
 
-var _templateObject, _templateObject2, _templateObject3, _templateObject4;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6;
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4177,37 +4177,51 @@ var MyList = /*#__PURE__*/function (_LitElement) {
     _this = _super.call(this);
     _this.title = '';
     _this.items = [];
+    _this.error = false;
+    _this.loading = false;
     return _this;
   }
 
   _createClass(MyList, [{
     key: "_getItem",
     value: function _getItem(item) {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <li>", " (", ")</li>\n    "])), (item === null || item === void 0 ? void 0 : item.name) || 'Sin nombre', (item === null || item === void 0 ? void 0 : item.year) || 'Sin año');
+      var _item$release_date;
+
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <li>", " (", ")</li>\n    "])), (item === null || item === void 0 ? void 0 : item.title) || 'Sin nombre', (item === null || item === void 0 ? void 0 : (_item$release_date = item.release_date) === null || _item$release_date === void 0 ? void 0 : _item$release_date.slice(0, 4)) || 'Sin año');
     }
   }, {
     key: "render",
     value: function render() {
       var _this$items, _this$items2;
 
-      return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      <h1>\n        ", "\n      </h1>\n      <ul>\n        ", "\n      </ul>\n    "])), this.title, !this.items || ((_this$items = this.items) === null || _this$items === void 0 ? void 0 : _this$items.length) === 0 ? (0, _litElement.html)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["<p class=\"text-info\">No hay datos</p>"]))) : (_this$items2 = this.items) === null || _this$items2 === void 0 ? void 0 : _this$items2.map(this._getItem));
+      return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      <h1>\n        ", "\n      </h1>\n      <ul>\n        ", "\n      </ul>\n    "])), this.title, this.error ? // Comprobamos si existe un error al pedir las peliculas
+      (0, _litElement.html)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["<p class=\"text-error\">\xA1Error en el servidor!</p>"]))) : this.loading ? // Comprobamos si la peticion esta cargando
+      (0, _litElement.html)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["<p class=\"text-info\">Loading...</p>"]))) : !this.items || ((_this$items = this.items) === null || _this$items === void 0 ? void 0 : _this$items.length) === 0 ? // Comprobamos que la lista no este vacia
+      (0, _litElement.html)(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["<p class=\"text-info\">EMPTY LIST</p>"]))) : (_this$items2 = this.items) === null || _this$items2 === void 0 ? void 0 : _this$items2.map(this._getItem) // Mostramos los elementos de la lista
+      );
     }
   }], [{
     key: "properties",
     get: function get() {
       return {
+        items: {
+          type: Array
+        },
         title: {
           type: String
         },
-        items: {
-          type: Array
+        error: {
+          type: Boolean
+        },
+        loading: {
+          type: Boolean
         }
       };
     }
   }, {
     key: "styles",
     get: function get() {
-      return (0, _litElement.css)(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n      li {\n        color: teal;\n        padding: 10px 0;\n        font-size: large;\n        font-weight: bold;\n      }\n\n      .text-info {\n        color: #EC7D15;\n        font-size: large;\n        font-weight: bold;\n      }\n    "])));
+      return (0, _litElement.css)(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n      li {\n        color: teal;\n        padding: 10px 0;\n        font-size: large;\n        font-weight: bold;\n      }\n\n      .text-info {\n        color: #EC7D15;\n        font-size: large;\n        font-weight: bold;\n      }\n\n      .text-error {\n        color: #B4242C;\n        font-size: large;\n        font-weight: bold;\n      }\n    "])));
     }
   }]);
 
@@ -4260,29 +4274,30 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
 
     _this = _super.call(this);
     _this.list = [];
+    _this.error = false;
+    _this.boolean = false;
     return _this;
   }
 
   _createClass(MyApp, [{
     key: "_mandarLista",
     value: function _mandarLista() {
-      this.list = [{
-        id: 1,
-        name: 'The Dark Knight',
-        year: 2008
-      }, {
-        id: 2,
-        name: 'Inception',
-        year: 2010
-      }, {
-        id: 3,
-        name: 'Matrix',
-        year: 1999
-      }, {
-        id: 4,
-        name: 'Fight Club',
-        year: 1999
-      }];
+      var _this2 = this;
+
+      var node = this.shadowRoot.querySelector('my-list');
+      var url = 'https://api.themoviedb.org/3/movie/now_playing?api_key=4ff32b3a95fabacb861ecfa8aa1dfcba&language=en-US&page=1';
+      node.removeAttribute('error');
+      node.setAttribute('loading', true);
+      fetch(url).then(function (data) {
+        return data.json();
+      }).then(function (_ref) {
+        var results = _ref.results;
+        _this2.list = results;
+        node.removeAttribute('loading');
+        node.removeAttribute('error');
+      }).catch(function (error) {
+        node.setAttribute('error', true);
+      });
     }
   }, {
     key: "_limiarLista",
@@ -4292,7 +4307,7 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
   }, {
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <div>\n        <button type=\"button\" @click=", ">\n          Create list\n        </button>\n        <button type=\"button\" @click=", ">\n          Empty list\n        </button>\n\n        <my-list title=\"My favorites movies\" items=", "></my-list>\n      </div>\n    "])), this._mandarLista, this._limiarLista, JSON.stringify(this.list));
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <div>\n        <button type=\"button\" @click=", ">\n          Create list\n        </button>\n        <button type=\"button\" @click=", ">\n          Empty list\n        </button>\n\n        <my-list\n          title=\"My favorites movies\"\n          items=", "\n        ></my-list>\n      </div>\n    "])), this._mandarLista, this._limiarLista, JSON.stringify(this.list));
     }
   }], [{
     key: "properties",
@@ -4300,10 +4315,15 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
       return {
         list: {
           type: Array
+        },
+        error: {
+          type: Boolean
+        },
+        loading: {
+          type: Boolean
         }
       };
-    } // border-radius: 0
-
+    }
   }, {
     key: "styles",
     get: function get() {
@@ -4343,7 +4363,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42983" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35041" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
